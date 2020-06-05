@@ -1,0 +1,19 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: item
+#  cloud:
+#    config:
+#      uri: http://${configServerIp}:${configServerPort}/config/
+#      fail-fast: true
+  profiles:
+    active: ${activatedProperties}
+encrypt:
+  failOnError: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    enabled: true
