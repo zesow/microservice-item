@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -17,12 +15,14 @@ import java.util.stream.StreamSupport;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name="item")
 public class ItemJpo {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    @Column(name = "NM")
+    @Column(name = "NAME")
     private String name;
     @Column(name = "B_PRC")
     private int buyingPrice;
@@ -31,7 +31,7 @@ public class ItemJpo {
 
     @Column(name = "SELLER")
     private String seller;
-    @Column(name = "SELLER_ID")
+    @Column(name = "S_ID")
     private String sellerId;
 
     public ItemJpo(Item entity) {

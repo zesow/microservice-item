@@ -22,7 +22,7 @@ public class Item {
 
     public Item() {
         super();
-        this.id = UUID.randomUUID().toString();
+//        this.id = UUID.randomUUID().toString();
     }
 
     public void setValues(Map<String,String> object) {
