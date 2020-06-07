@@ -3,9 +3,9 @@ server:
 spring:
   application:
     name: item
-#  cloud:
-#    config:
-#      uri: http://${configServerIp}:${configServerPort}/config/
+  cloud:
+    config:
+      uri: http://localhost:8888
 #      fail-fast: true
   profiles:
     active: ${activatedProperties}

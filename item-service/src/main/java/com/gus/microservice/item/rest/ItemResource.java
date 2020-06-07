@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/item")
+@RequestMapping
 public class ItemResource {
 
     public final ItemService itemService;
