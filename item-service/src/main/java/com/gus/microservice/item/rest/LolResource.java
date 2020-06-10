@@ -4,6 +4,8 @@ import com.gus.microservice.item.domain.lifecycle.ServiceLifecycle;
 import com.gus.microservice.item.domain.spec.LolService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "/lol")
 public class LolResource {
@@ -16,7 +18,7 @@ public class LolResource {
 
     @CrossOrigin
     @GetMapping(value = "/{id}")
-    public String findUserMatchHistoryByUsername(@PathVariable(value="id") String id) {
+    public Map<String,Object> findUserMatchHistoryByUsername(@PathVariable(value="id") String id) {
         return lolService.findUserMatchHistoryByUsername(id);
     }
 }

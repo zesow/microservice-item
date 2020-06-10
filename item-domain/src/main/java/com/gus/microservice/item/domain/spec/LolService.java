@@ -1,6 +1,8 @@
 package com.gus.microservice.item.domain.spec;
 
+import java.util.Map;
+
 public interface LolService {
 
-    String findUserMatchHistoryByUsername(String id);
+    Map<String, Object> findUserMatchHistoryByUsername(String id);
 }
