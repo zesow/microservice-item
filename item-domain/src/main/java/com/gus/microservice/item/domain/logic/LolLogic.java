@@ -5,6 +5,8 @@ import com.gus.microservice.item.domain.spec.LolService;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class LolLogic implements LolService {
 
-    private String API_KEY = "RGAPI-8e59c818-afdc-451b-8f48-d8fd8e158547";
+    private String API_KEY = "RGAPI-794bfb23-38b7-4f32-8e25-5f057aa499bd";
 
     @Override
     public Map<String, Object> findUserMatchHistoryByUsername(String id) {
@@ -73,13 +75,24 @@ public class LolLogic implements LolService {
 
                     result.put("matches", matches);
                 }
+                else {
+                    throw new ResponseStatusException(
+                            HttpStatus.NOT_FOUND, "Not 200 OK");
+                }
 
+            }
+            else {
+                throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Not 200 OK");
             }
 
 
         } catch (IOException e) {
             result.replace("returnCode", "500");
             result.replace("returnMsg", e.getCause());
+        } catch (ResponseStatusException ex) {
+            result.replace("returnCode", "500");
+            result.replace("returnMsg", ex.getStatus());
         }
 
 

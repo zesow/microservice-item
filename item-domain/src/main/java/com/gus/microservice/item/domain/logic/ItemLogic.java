@@ -7,7 +7,9 @@ import com.gus.microservice.item.domain.lifecycle.StoreLifecycle;
 import com.gus.microservice.item.domain.proxy.UserProxy;
 import com.gus.microservice.item.domain.store.ItemStore;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ItemLogic implements ItemService {
 
@@ -48,5 +50,10 @@ public class ItemLogic implements ItemService {
         this.itemStore.delete(id);
 
 
+    }
+
+    @Override
+    public List<Item> findAll() {
+        return this.itemStore.findAll();
     }
 }

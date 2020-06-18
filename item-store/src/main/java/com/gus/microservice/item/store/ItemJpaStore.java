@@ -6,8 +6,10 @@ import com.gus.microservice.item.store.jpo.ItemJpo;
 import com.gus.microservice.item.store.repository.ItemRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class ItemJpaStore implements ItemStore {
@@ -44,5 +46,10 @@ public class ItemJpaStore implements ItemStore {
 
         itemRepository.deleteById(id);
 
+    }
+
+    @Override
+    public List<Item> findAll() {
+        return itemRepository.findAll().stream().map(ItemJpo::toDomain).collect(Collectors.toList());
     }
 }
