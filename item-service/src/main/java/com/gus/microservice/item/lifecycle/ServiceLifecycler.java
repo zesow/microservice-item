@@ -2,19 +2,24 @@ package com.gus.microservice.item.lifecycle;
 
 import com.gus.microservice.item.domain.spec.ItemService;
 import com.gus.microservice.item.domain.lifecycle.ServiceLifecycle;
-import com.gus.microservice.item.domain.spec.LolService;
+import com.gus.microservice.item.domain.spec.lol.LolLevel2Service;
+import com.gus.microservice.item.domain.spec.lol.LolLevel3Service;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ServiceLifecycler implements ServiceLifecycle {
 
     private final ItemService itemService;
-    private final LolService lolService;
+    private final LolLevel3Service lolLevel3Service;
+//    private final LolLevel2Service lolLevel2Service;
 
     public ServiceLifecycler(
-            ItemService itemService, LolService lolService) {
+            ItemService itemService
+            , LolLevel3Service lolLevel3Service, LolLevel2Service lolLevel2Service) {
         this.itemService = itemService;
-        this.lolService = lolService;
+
+        this.lolLevel3Service = lolLevel3Service;
+//        this.lolLevel2Service = lolLevel2Service;
     }
 
     @Override
@@ -23,7 +28,13 @@ public class ServiceLifecycler implements ServiceLifecycle {
     }
 
     @Override
-    public LolService requestLolService() {
-        return this.lolService;
+    public LolLevel3Service requestLolLevel3Service() {
+        return this.lolLevel3Service;
     }
+
+//    @Override
+//    public LolLevel2Service requestLolLevel2Service() {
+//        return this.lolLevel2Service;
+//    }
+
 }

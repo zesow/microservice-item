@@ -1,7 +1,7 @@
 package com.gus.microservice.item.rest;
 
 import com.gus.microservice.item.domain.lifecycle.ServiceLifecycle;
-import com.gus.microservice.item.domain.spec.LolService;
+import com.gus.microservice.item.domain.spec.lol.LolLevel3Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -10,10 +10,10 @@ import java.util.Map;
 @RequestMapping(value = "/lol")
 public class LolResource {
 
-    private final LolService lolService;
+    private final LolLevel3Service lolService;
 
     public LolResource(ServiceLifecycle serviceLifecycle) {
-        this.lolService = serviceLifecycle.requestLolService();
+        this.lolService = serviceLifecycle.requestLolLevel3Service();
     }
 
     @CrossOrigin
