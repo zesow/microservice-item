@@ -1,12 +1,17 @@
 package com.gus.microservice.item.domain.spec.lol;
 
+import com.gus.microservice.item.domain.entity.lol.LeagueEntryDTO;
+import com.gus.microservice.item.domain.entity.lol.MatchlistDto;
+import com.gus.microservice.item.domain.entity.lol.SummonerDTO;
+
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public interface LolLevel2Service {
 
-    String summonersByName(String id) throws IOException;
+    SummonerDTO summonersByName(String id) throws IOException;
 
-    List<Map<String, Object>> matchlistsByAccount(String encryptedAccountId) throws IOException;
+    MatchlistDto matchlistsByAccount(String encryptedAccountId) throws IOException;
+
+    Set<LeagueEntryDTO> userInfoByEncryptedSummonerId(String encryptedSummonerId) throws IOException;
 }

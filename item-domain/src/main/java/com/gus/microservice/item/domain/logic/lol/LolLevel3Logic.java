@@ -1,24 +1,17 @@
 package com.gus.microservice.item.domain.logic.lol;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gus.microservice.item.domain.lifecycle.ServiceLifecycle;
+import com.gus.microservice.item.domain.entity.lol.LeagueEntryDTO;
+import com.gus.microservice.item.domain.entity.lol.MatchlistDto;
+import com.gus.microservice.item.domain.entity.lol.SummonerDTO;
 import com.gus.microservice.item.domain.spec.lol.LolLevel2Service;
 import com.gus.microservice.item.domain.spec.lol.LolLevel3Service;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class LolLevel3Logic implements LolLevel3Service {
 
@@ -38,21 +31,11 @@ public class LolLevel3Logic implements LolLevel3Service {
 
         try {
 
-            String encryptedAccountId = this.lolLevel2Service.summonersByName(id);
+            SummonerDTO summonerDTO = this.lolLevel2Service.summonersByName(id);
 
-            List<Map<String, Object>> matches = this.lolLevel2Service.matchlistsByAccount(encryptedAccountId);
+            MatchlistDto matchlistDto = this.lolLevel2Service.matchlistsByAccount(summonerDTO.getAccountId());
 
-            for (Map<String, Object> match : matches) {
-                Long timestamp = (Long) match.get("timestamp");
-                Date date = new Date(timestamp);
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String bb = format.format(date);
-
-                match.put("formattedTimestamp", bb);
-            }
-
-
-            result.put("matches", matches);
+            result.put("matchlistDto", matchlistDto);
 
 
         } catch (IOException e) {
@@ -63,6 +46,31 @@ public class LolLevel3Logic implements LolLevel3Service {
             result.replace("returnMsg", ex.getStatus());
         }
 
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> findUserInfo(String id) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("returnCode", "200");
+        result.put("returnMsg", "정상 처리 완료!");
+
+        try {
+
+            SummonerDTO summonerDTO = this.lolLevel2Service.summonersByName(id);
+
+            Set<LeagueEntryDTO> leagueEntryDTOSet = this.lolLevel2Service.userInfoByEncryptedSummonerId(summonerDTO.getId());
+
+            result.put("leagueEntryDTOSet", leagueEntryDTOSet);
+
+        } catch (IOException e) {
+            result.replace("returnCode", "500");
+            result.replace("returnMsg", e.getCause());
+        } catch (ResponseStatusException ex) {
+            result.replace("returnCode", "500");
+            result.replace("returnMsg", ex.getStatus());
+        }
 
         return result;
     }

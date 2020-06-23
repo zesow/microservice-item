@@ -17,8 +17,14 @@ public class LolResource {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/findUserMatchHistoryByUsername/{id}")
     public Map<String,Object> findUserMatchHistoryByUsername(@PathVariable(value="id") String id) {
         return lolService.findUserMatchHistoryByUsername(id);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/findUserInfo/{id}")
+    public Map<String,Object> findUserInfo(@PathVariable(value="id") String id) {
+        return lolService.findUserInfo(id);
     }
 }
